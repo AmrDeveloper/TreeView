@@ -27,16 +27,15 @@ package com.amrdeveloper.treeview;
 import android.view.View;
 
 /**
- * TreeViewHolder Builder functional interface
- * used to provide a new custom TreeViewHolder instance
+ * TreeViewHolder Factory class to get TreeViewHolder instance for the current view
  */
-@FunctionalInterface
-public interface ViewHolderBuilder {
+public interface TreeViewHolderFactory {
 
     /**
-     * TreeView Holder build function that take view and return custom TreeViewHolder instance
-     * @param view the current view
-     * @return Custom TreeViewHolder instance
+     * Provide a TreeViewHolder class depend on the current view
+     * @param view The list item view
+     * @param layout The layout xml file id for current view
+     * @return A TreeViewHolder instance
      */
-    TreeViewHolder build(View view);
+    TreeViewHolder getTreeViewHolder(View view, int layout);
 }
