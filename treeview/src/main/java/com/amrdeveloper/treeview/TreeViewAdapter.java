@@ -33,8 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * Custom RecyclerView.Adapter used to provide a tree view features on any RecyclerView
@@ -73,9 +71,9 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     private final LinkedList<TreeNode> rootsNodes = new LinkedList<>();
 
     /**
-     * A ViewHolderBuilders mapped to the layout id's
+     * A ViewHolder Factory to get TreeViewHolder object that mapped with layout
      */
-    private final Map<Integer, ViewHolderBuilder> viewHolderBuilders;
+    private final TreeViewHolderFactory treeViewHolderFactory;
 
     /**
      * The current selected Tree Node
@@ -94,17 +92,17 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Simple constructor
-     * @param builders a View Holder Builders mapped with layout id's
+     * @param factory a View Holder Factory mapped with layout id's
      */
-    public TreeViewAdapter(Map<Integer, ViewHolderBuilder> builders) {
-        this.viewHolderBuilders = builders;
+    public TreeViewAdapter(TreeViewHolderFactory factory) {
+        this.treeViewHolderFactory = factory;
     }
 
     @NonNull
     @Override
     public TreeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int layoutId) {
         View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
-        return Objects.requireNonNull(viewHolderBuilders.get(layoutId)).build(view);
+        return treeViewHolderFactory.getTreeViewHolder(view, layoutId);
     }
 
     @Override
@@ -153,6 +151,66 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     }
 
     /**
+     * Collapsing node and all of his children
+     * @param node The node to collapse it
+     */
+    public void collapseNode(TreeNode node) {
+        int position = rootsNodes.indexOf(node);
+        if (position != -1 && node.isExpanded() && node.getChildren().size() > 0) {
+            node.setExpanded(false);
+            for (TreeNode child : node.getChildren()) {
+                rootsNodes.remove(child);
+            }
+            notifyItemChanged(position);
+            notifyItemRangeRemoved(position + 1, node.getChildren().size());
+        }
+    }
+
+    /**
+     * Expanding node and all of his children
+     * @param node The node to expand it
+     */
+    public void expandNode(TreeNode node) {
+        int position = rootsNodes.indexOf(node);
+        if (position != -1 && !node.isExpanded() && node.getChildren().size() > 0) {
+            node.setExpanded(true);
+            int oldSize = rootsNodes.size();
+            int startPosition = position + 1;
+            for (TreeNode child : node.getChildren()) {
+                rootsNodes.add(startPosition++, child);
+            }
+            int diffSize = rootsNodes.size() - oldSize;
+            notifyItemChanged(position);
+            notifyItemRangeInserted(position + 1, diffSize);
+        }
+    }
+
+    /**
+     * Collapsing all nodes in the tree with their children
+     */
+    public void collapseAll() {
+        for (int i = 0; i < rootsNodes.size(); i++) {
+            TreeNode node = rootsNodes.get(i);
+            if (node.getLevel() == 0) {
+                removeNodeBranch(node);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Expanding all nodes in the tree with their children
+     */
+    public void expandAll() {
+        for (int i = 0; i < rootsNodes.size(); i++) {
+            TreeNode node = rootsNodes.get(i);
+            node.setExpanded(true);
+            insertNodeBranch(node, i + 1);
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
      * Update the list of tree nodes
      * @param treeNodes The new tree nodes
      */
@@ -187,13 +245,16 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     }
 
     private void insertNodeBranch(TreeNode node, int startPosition) {
+        node.setExpanded(true);
         for (TreeNode child : node.getChildren()) {
             rootsNodes.add(startPosition++, child);
-            if (child.isExpanded()) insertNodeBranch(child, startPosition);
+            if (child.isExpanded())
+                insertNodeBranch(child, startPosition);
         }
     }
 
     private void removeNodeBranch(TreeNode node) {
+        node.setExpanded(false);
         for (TreeNode child : node.getChildren()) {
             rootsNodes.remove(child);
             if (!child.getChildren().isEmpty()) removeNodeBranch(child);
