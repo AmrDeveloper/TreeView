@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    android:scrollbarSize="5dp"
+    android:scrollbarThumbHorizontal="@android:color/holo_blue_bright"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/files_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@android:color/holo_blue_bright"
+        android:scrollbars="vertical" />
+</HorizontalScrollView>

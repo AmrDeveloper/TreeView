@@ -16,4 +16,12 @@
     <item
         android:id="@+id/collapse_selected_action"
         android:title="Collapse Selected" />
+
+    <item
+        android:id="@+id/expand_selected_branch_action"
+        android:title="Expand Selected Branch" />
+
+    <item
+        android:id="@+id/collapse_selected_branch_action"
+        android:title="Collapse Selected Branch" />
 </menu>

@@ -37,6 +37,7 @@ public class FileTreeFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.files_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setNestedScrollingEnabled(false);
 
         TreeViewHolderFactory factory = (v, layout) -> new FileViewHolder(v);
 
@@ -47,6 +48,17 @@ public class FileTreeFragment extends Fragment {
         rootDirectory.addChild(new TreeNode("Folder1.txt", R.layout.list_item_file));
         rootDirectory.addChild(new TreeNode("Folder2.txt", R.layout.list_item_file));
         rootDirectory.addChild(new TreeNode("Folder3.txt", R.layout.list_item_file));
+
+        TreeNode base = rootDirectory;
+        for (int i = 0 ; i < 10 ; i++) {
+            String branchTitle = "Branch:" + i;
+            TreeNode branch = new TreeNode(branchTitle, R.layout.list_item_file);
+            branch.addChild(new TreeNode(branchTitle + "0", R.layout.list_item_file));
+            branch.addChild(new TreeNode(branchTitle + "1", R.layout.list_item_file));
+            branch.addChild(new TreeNode(branchTitle + "2", R.layout.list_item_file));
+            base.addChild(branch);
+            base = branch;
+        }
 
         TreeNode rootDirectory2 = new TreeNode("KotlinRoot", R.layout.list_item_file);
         rootDirectory2.addChild(new TreeNode("FolderK1.kt", R.layout.list_item_file));
@@ -83,6 +95,12 @@ public class FileTreeFragment extends Fragment {
         }
         else if (menuId == R.id.collapse_selected_action) {
             treeViewAdapter.collapseNode(treeViewAdapter.getSelectedNode());
+        }
+        else if (menuId == R.id.expand_selected_branch_action) {
+            treeViewAdapter.expandNodeBranch(treeViewAdapter.getSelectedNode());
+        }
+        else if (menuId == R.id.collapse_selected_branch_action) {
+            treeViewAdapter.collapseNodeBranch(treeViewAdapter.getSelectedNode());
         }
         return super.onOptionsItemSelected(item);
     }
