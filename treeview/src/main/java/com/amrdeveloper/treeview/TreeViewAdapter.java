@@ -31,7 +31,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -64,11 +63,11 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
         boolean onTreeNodeLongClick(TreeNode treeNode, View view);
     }
 
-    // private final LinkedList<TreeNode> roots = new LinkedList<>();
     /**
-     * LinkedList of all the roots (Level 0) Nodes
+     * Manager class for TreeNodes to easily apply operations on them
+     * and to make it easy for testing and extending
      */
-    private final LinkedList<TreeNode> rootsNodes = new LinkedList<>();
+    private final TreeNodeManager treeNodeManager;
 
     /**
      * A ViewHolder Factory to get TreeViewHolder object that mapped with layout
@@ -96,6 +95,17 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      */
     public TreeViewAdapter(TreeViewHolderFactory factory) {
         this.treeViewHolderFactory = factory;
+        this.treeNodeManager = new TreeNodeManager();
+    }
+
+    /**
+     * Constructor used to accept user custom TreeNodeManager class
+     * @param factory a View Holder Factory mapped with layout id's
+     * @param manager a custom tree node manager class
+     */
+    public TreeViewAdapter(TreeViewHolderFactory factory, TreeNodeManager manager) {
+        this.treeViewHolderFactory = factory;
+        this.treeNodeManager = manager;
     }
 
     @NonNull
@@ -107,7 +117,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TreeViewHolder holder, int position) {
-        TreeNode currentNode = rootsNodes.get(position);
+        TreeNode currentNode = treeNodeManager.get(position);
         holder.bindTreeNode(currentNode);
 
         holder.itemView.setOnClickListener(v -> {
@@ -119,8 +129,8 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
             // Handle node expand and collapse event
             if (!currentNode.getChildren().isEmpty()) {
                 boolean isNodeExpanded = currentNode.isExpanded();
-                if (isNodeExpanded) removeNodeBranch(currentNode);
-                else insertNodeBranch(currentNode, position + 1);
+                if (isNodeExpanded) collapseNode(currentNode);
+                else expandNode(currentNode);
                 currentNode.setExpanded(!isNodeExpanded);
             }
 
@@ -142,12 +152,12 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return rootsNodes.get(position).getLayoutId();
+        return treeNodeManager.get(position).getLayoutId();
     }
 
     @Override
     public int getItemCount() {
-        return rootsNodes.size();
+        return treeNodeManager.size();
     }
 
     /**
@@ -155,12 +165,8 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      * @param node The node to collapse it
      */
     public void collapseNode(TreeNode node) {
-        int position = rootsNodes.indexOf(node);
-        if (position != -1 && node.isExpanded() && node.getChildren().size() > 0) {
-            node.setExpanded(false);
-            for (TreeNode child : node.getChildren()) {
-                rootsNodes.remove(child);
-            }
+        int position = treeNodeManager.collapseNode(node);
+        if (position != -1) {
             notifyItemChanged(position);
             notifyItemRangeRemoved(position + 1, node.getChildren().size());
         }
@@ -171,30 +177,36 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      * @param node The node to expand it
      */
     public void expandNode(TreeNode node) {
-        int position = rootsNodes.indexOf(node);
-        if (position != -1 && !node.isExpanded() && node.getChildren().size() > 0) {
-            node.setExpanded(true);
-            int oldSize = rootsNodes.size();
-            int startPosition = position + 1;
-            for (TreeNode child : node.getChildren()) {
-                rootsNodes.add(startPosition++, child);
-            }
-            int diffSize = rootsNodes.size() - oldSize;
+        int position = treeNodeManager.expandNode(node);
+        if (position != -1) {
             notifyItemChanged(position);
-            notifyItemRangeInserted(position + 1, diffSize);
+            notifyItemRangeRemoved(position + 1, node.getChildren().size());
         }
+    }
+
+    /**
+     * Collapsing full node branches
+     * @param node The node to collapse it
+     */
+    public void collapseNodeBranch(TreeNode node) {
+        treeNodeManager.collapseNodeBranch(node);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Expanding node full branches
+     * @param node The node to expand it
+     */
+    public void expandNodeBranch(TreeNode node) {
+        treeNodeManager.expandNodeBranch(node);
+        notifyDataSetChanged();
     }
 
     /**
      * Collapsing all nodes in the tree with their children
      */
     public void collapseAll() {
-        for (int i = 0; i < rootsNodes.size(); i++) {
-            TreeNode node = rootsNodes.get(i);
-            if (node.getLevel() == 0) {
-                removeNodeBranch(node);
-            }
-        }
+        treeNodeManager.collapseAll();
         notifyDataSetChanged();
     }
 
@@ -202,11 +214,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      * Expanding all nodes in the tree with their children
      */
     public void expandAll() {
-        for (int i = 0; i < rootsNodes.size(); i++) {
-            TreeNode node = rootsNodes.get(i);
-            node.setExpanded(true);
-            insertNodeBranch(node, i + 1);
-        }
+        treeNodeManager.expandAll();
         notifyDataSetChanged();
     }
 
@@ -215,9 +223,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      * @param treeNodes The new tree nodes
      */
     public void updateTreeNodes(List<TreeNode> treeNodes) {
-        rootsNodes.clear();
-        rootsNodes.addAll(treeNodes);
-
+        treeNodeManager.updateNodes(treeNodes);
         notifyItemRangeInserted(0, treeNodes.size());
     }
 
@@ -242,22 +248,5 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      */
     public TreeNode getSelectedNode() {
         return currentSelectedNode;
-    }
-
-    private void insertNodeBranch(TreeNode node, int startPosition) {
-        node.setExpanded(true);
-        for (TreeNode child : node.getChildren()) {
-            rootsNodes.add(startPosition++, child);
-            if (child.isExpanded())
-                insertNodeBranch(child, startPosition);
-        }
-    }
-
-    private void removeNodeBranch(TreeNode node) {
-        node.setExpanded(false);
-        for (TreeNode child : node.getChildren()) {
-            rootsNodes.remove(child);
-            if (!child.getChildren().isEmpty()) removeNodeBranch(child);
-        }
     }
 }
