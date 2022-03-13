@@ -103,7 +103,6 @@ public class TreeNodeManager {
      */
     public int collapseNode(TreeNode node) {
         int position = rootsNodes.indexOf(node);
-
         if (position != -1 && node.isExpanded()) {
             node.setExpanded(false);
             LinkedList<TreeNode> deletedParents = new LinkedList<>(node.getChildren());
@@ -111,12 +110,11 @@ public class TreeNodeManager {
             for (int i = position + 1; i < rootsNodes.size(); i++) {
                 TreeNode iNode = rootsNodes.get(i);
                 if (deletedParents.contains(iNode.getParent())) {
-                    rootsNodes.remove(iNode);
-                    rootsNodes.removeAll(iNode.getChildren());
-                    deletedParents.remove(iNode);
-                    deletedParents.removeAll(iNode.getChildren());
+                    deletedParents.add(iNode);
+                    deletedParents.addAll(iNode.getChildren());
                 }
             }
+            rootsNodes.removeAll(deletedParents);
         }
         return position;
     }
@@ -131,8 +129,26 @@ public class TreeNodeManager {
         if (position != -1 && !node.isExpanded()) {
             node.setExpanded(true);
             rootsNodes.addAll(position + 1, node.getChildren());
+            for (TreeNode child : node.getChildren()) {
+                if (child.isExpanded()) updateExpandedNodeChildren(child);
+            }
         }
         return position;
+    }
+
+    /**
+     * Update the list for expanded node
+     * to expand any child of his children that is already expanded before
+     * @param node that just expanded now
+     */
+    private void updateExpandedNodeChildren(TreeNode node) {
+        int position = rootsNodes.indexOf(node);
+        if (position != -1 && node.isExpanded()) {
+            rootsNodes.addAll(position + 1, node.getChildren());
+            for (TreeNode child : node.getChildren()) {
+                if (child.isExpanded()) updateExpandedNodeChildren(child);
+            }
+        }
     }
 
     /**
