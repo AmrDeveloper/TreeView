@@ -103,9 +103,20 @@ public class TreeNodeManager {
      */
     public int collapseNode(TreeNode node) {
         int position = rootsNodes.indexOf(node);
+
         if (position != -1 && node.isExpanded()) {
             node.setExpanded(false);
+            LinkedList<TreeNode> deletedParents = new LinkedList<>(node.getChildren());
             rootsNodes.removeAll(node.getChildren());
+            for (int i = position + 1; i < rootsNodes.size(); i++) {
+                TreeNode iNode = rootsNodes.get(i);
+                if (deletedParents.contains(iNode.getParent())) {
+                    rootsNodes.remove(iNode);
+                    rootsNodes.removeAll(iNode.getChildren());
+                    deletedParents.remove(iNode);
+                    deletedParents.removeAll(iNode.getChildren());
+                }
+            }
         }
         return position;
     }
@@ -152,8 +163,12 @@ public class TreeNodeManager {
             node.setExpanded(true);
             int index = position + 1;
             for (TreeNode child : node.getChildren()) {
-                rootsNodes.add(index++, child);
-                if (!child.isExpanded()) expandNodeBranch(child);
+                int before = rootsNodes.size();
+                rootsNodes.add(index, child);
+                expandNodeBranch(child);
+                int after = rootsNodes.size();
+                int diff = after - before;
+                index += diff;
             }
         }
         return position;
