@@ -53,9 +53,9 @@ public class FileTreeFragment extends Fragment {
         for (int i = 0 ; i < 10 ; i++) {
             String branchTitle = "Branch:" + i;
             TreeNode branch = new TreeNode(branchTitle, R.layout.list_item_file);
-            branch.addChild(new TreeNode(branchTitle + "0", R.layout.list_item_file));
-            branch.addChild(new TreeNode(branchTitle + "1", R.layout.list_item_file));
-            branch.addChild(new TreeNode(branchTitle + "2", R.layout.list_item_file));
+            branch.addChild(new TreeNode(branchTitle + "0.txt", R.layout.list_item_file));
+            branch.addChild(new TreeNode(branchTitle + "1.txt", R.layout.list_item_file));
+            branch.addChild(new TreeNode(branchTitle + "2.txt", R.layout.list_item_file));
             base.addChild(branch);
             base = branch;
         }
@@ -101,6 +101,9 @@ public class FileTreeFragment extends Fragment {
         }
         else if (menuId == R.id.collapse_selected_branch_action) {
             treeViewAdapter.collapseNodeBranch(treeViewAdapter.getSelectedNode());
+        }
+        else if (menuId == R.id.expand_selected_level_action) {
+            treeViewAdapter.expandNodesAtLevel(2);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -24,4 +24,8 @@
     <item
         android:id="@+id/collapse_selected_branch_action"
         android:title="Collapse Selected Branch" />
+
+    <item
+        android:id="@+id/expand_selected_level_action"
+        android:title="Expand Nodes to level 2" />
 </menu>
