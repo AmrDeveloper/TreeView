@@ -167,8 +167,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     public void collapseNode(TreeNode node) {
         int position = treeNodeManager.collapseNode(node);
         if (position != -1) {
-            notifyItemChanged(position);
-            notifyItemRangeRemoved(position + 1, node.getChildren().size());
+            notifyDataSetChanged();
         }
     }
 
@@ -199,6 +198,25 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      */
     public void expandNodeBranch(TreeNode node) {
         treeNodeManager.expandNodeBranch(node);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Expanding one node branch to until specific level
+     * @param node to expand branch of it until level
+     * @param level to expand node branches to it
+     */
+    public void expandNodeToLevel(TreeNode node, int level) {
+        treeNodeManager.expandNodeToLevel(node, level);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Expanding all tree nodes branches to until specific level
+     * @param level to expand all nodes branches to it
+     */
+    public void expandNodesAtLevel(int level) {
+        treeNodeManager.expandNodesAtLevel(level);
         notifyDataSetChanged();
     }
 
