@@ -175,6 +175,29 @@ public class TreeNodeManager {
     }
 
     /**
+     * Expanding one node branch to until specific level
+     * @param node to expand branch of it until level
+     * @param level to expand node branches to it
+     */
+    public void expandNodeToLevel(TreeNode node, int level) {
+        if (node.getLevel() <= level) expandNode(node);
+        for (TreeNode child : node.getChildren()) {
+            expandNodeToLevel(child, level);
+        }
+    }
+
+    /**
+     * Expanding all tree nodes branches to until specific level
+     * @param level to expand all nodes branches to it
+     */
+    public void expandNodesAtLevel(int level) {
+        for (int i = 0; i < rootsNodes.size() ; i++) {
+            TreeNode node = rootsNodes.get(i);
+            expandNodeToLevel(node, level);
+        }
+    }
+
+    /**
      * Collapsing all nodes in the tree with their children
      */
     public void collapseAll() {
