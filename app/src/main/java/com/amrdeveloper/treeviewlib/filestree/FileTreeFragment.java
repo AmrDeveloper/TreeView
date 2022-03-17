@@ -44,37 +44,51 @@ public class FileTreeFragment extends Fragment {
         treeViewAdapter = new TreeViewAdapter(factory);
         recyclerView.setAdapter(treeViewAdapter);
 
-        TreeNode rootDirectory = new TreeNode("Root", R.layout.list_item_file);
-        rootDirectory.addChild(new TreeNode("Folder1.txt", R.layout.list_item_file));
-        rootDirectory.addChild(new TreeNode("Folder2.txt", R.layout.list_item_file));
-        rootDirectory.addChild(new TreeNode("Folder3.txt", R.layout.list_item_file));
+        TreeNode javaDirectory = new TreeNode("Java", R.layout.list_item_file);
+        javaDirectory.addChild(new TreeNode("FileJava1.java", R.layout.list_item_file));
+        javaDirectory.addChild(new TreeNode("FileJava2.java", R.layout.list_item_file));
+        javaDirectory.addChild(new TreeNode("FileJava3.java", R.layout.list_item_file));
 
-        TreeNode base = rootDirectory;
-        for (int i = 0 ; i < 10 ; i++) {
-            String branchTitle = "Branch:" + i;
-            TreeNode branch = new TreeNode(branchTitle, R.layout.list_item_file);
-            branch.addChild(new TreeNode(branchTitle + "0.txt", R.layout.list_item_file));
-            branch.addChild(new TreeNode(branchTitle + "1.txt", R.layout.list_item_file));
-            branch.addChild(new TreeNode(branchTitle + "2.txt", R.layout.list_item_file));
-            base.addChild(branch);
-            base = branch;
-        }
+        TreeNode gradleDirectory = new TreeNode("Gradle", R.layout.list_item_file);
+        gradleDirectory.addChild(new TreeNode("FileGradle1.gradle", R.layout.list_item_file));
+        gradleDirectory.addChild(new TreeNode("FileGradle2.gradle", R.layout.list_item_file));
+        gradleDirectory.addChild(new TreeNode("FileGradle3.gradle", R.layout.list_item_file));
 
-        TreeNode rootDirectory2 = new TreeNode("KotlinRoot", R.layout.list_item_file);
-        rootDirectory2.addChild(new TreeNode("FolderK1.kt", R.layout.list_item_file));
-        rootDirectory2.addChild(new TreeNode("Folderk2.kt", R.layout.list_item_file));
-        rootDirectory2.addChild(new TreeNode("FolderK3.kt", R.layout.list_item_file));
+        javaDirectory.addChild(gradleDirectory);
 
-        TreeNode rootDirectory3 = new TreeNode("JavaRoot", R.layout.list_item_file);
-        rootDirectory3.addChild(new TreeNode("FolderJ1.java", R.layout.list_item_file));
-        rootDirectory3.addChild(new TreeNode("FolderJ2.java", R.layout.list_item_file));
-        rootDirectory3.addChild(new TreeNode("FolderJ3.java", R.layout.list_item_file));
+        TreeNode lowLevelRoot = new TreeNode("LowLevel", R.layout.list_item_file);
 
-        rootDirectory.addChild(rootDirectory2);
+        TreeNode cDirectory = new TreeNode("C", R.layout.list_item_file);
+        cDirectory.addChild(new TreeNode("FileC1.c", R.layout.list_item_file));
+        cDirectory.addChild(new TreeNode("FileC2.c", R.layout.list_item_file));
+        cDirectory.addChild(new TreeNode("FileC3.c", R.layout.list_item_file));
+
+        TreeNode cppDirectory = new TreeNode("Cpp", R.layout.list_item_file);
+        cppDirectory.addChild(new TreeNode("FileCpp1.cpp", R.layout.list_item_file));
+        cppDirectory.addChild(new TreeNode("FileCpp2.cpp", R.layout.list_item_file));
+        cppDirectory.addChild(new TreeNode("FileCpp3.cpp", R.layout.list_item_file));
+
+        TreeNode goDirectory = new TreeNode("Go", R.layout.list_item_file);
+        goDirectory.addChild(new TreeNode("FileGo1.go", R.layout.list_item_file));
+        goDirectory.addChild(new TreeNode("FileGo2.go", R.layout.list_item_file));
+        goDirectory.addChild(new TreeNode("FileGo3.go", R.layout.list_item_file));
+
+        lowLevelRoot.addChild(cDirectory);
+        lowLevelRoot.addChild(cppDirectory);
+        lowLevelRoot.addChild(goDirectory);
+
+        TreeNode cSharpDirectory = new TreeNode("C#", R.layout.list_item_file);
+        cSharpDirectory.addChild(new TreeNode("FileCs1.cs", R.layout.list_item_file));
+        cSharpDirectory.addChild(new TreeNode("FileCs2.cs", R.layout.list_item_file));
+        cSharpDirectory.addChild(new TreeNode("FileCs3.cs", R.layout.list_item_file));
+
+        TreeNode gitFolder = new TreeNode(".git", R.layout.list_item_file);
 
         List<TreeNode> fileRoots = new ArrayList<>();
-        fileRoots.add(rootDirectory);
-        fileRoots.add(rootDirectory3);
+        fileRoots.add(javaDirectory);
+        fileRoots.add(lowLevelRoot);
+        fileRoots.add(cSharpDirectory);
+        fileRoots.add(gitFolder);
 
         treeViewAdapter.updateTreeNodes(fileRoots);
 
