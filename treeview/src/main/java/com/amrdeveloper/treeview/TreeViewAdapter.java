@@ -178,8 +178,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     public void expandNode(TreeNode node) {
         int position = treeNodeManager.expandNode(node);
         if (position != -1) {
-            notifyItemChanged(position);
-            notifyItemRangeRemoved(position + 1, node.getChildren().size());
+            notifyDataSetChanged();
         }
     }
 
