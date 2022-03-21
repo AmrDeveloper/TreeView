@@ -34,8 +34,14 @@ public class FileViewHolder extends TreeViewHolder {
         String fileNameStr = node.getValue().toString();
         fileName.setText(fileNameStr);
 
-        int typeIcon = fileNameStr.contains(".") ? R.drawable.ic_file : R.drawable.ic_folder;
-        fileTypeIcon.setImageResource(typeIcon);
+        int dotIndex = fileNameStr.indexOf('.');
+        if (dotIndex == -1) {
+            fileTypeIcon.setImageResource(R.drawable.ic_folder);
+        } else {
+            String extension = fileNameStr.substring(dotIndex);
+            int extensionIcon = ExtensionTable.getExtensionIcon(extension);
+            fileTypeIcon.setImageResource(extensionIcon);
+        }
 
         if (node.getChildren().isEmpty()) {
             fileStateIcon.setVisibility(View.INVISIBLE);
