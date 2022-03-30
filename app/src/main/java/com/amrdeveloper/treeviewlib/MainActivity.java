@@ -12,10 +12,11 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.amrdeveloper.treeviewlib.filestree.FileTreeFragment;
+import com.amrdeveloper.treeviewlib.logtree.LogTreeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static int NUMBER_OF_FRAGMENTS = 1;
+    private final static int NUMBER_OF_FRAGMENTS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment createFragment(int position) {
             switch (position) {
+                case 0: return new FileTreeFragment();
+                case 1: return new LogTreeFragment();
                 default: return new FileTreeFragment();
             }
         }
