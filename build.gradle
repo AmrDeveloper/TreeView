@@ -1,10 +1,16 @@
 buildscript {
+
+    ext {
+        mavenPublishVersion = '0.18.0'
+    }
+
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath "com.vanniktech:gradle-maven-publish-plugin:$mavenPublishVersion"
     }
 }
 
@@ -15,6 +21,12 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+apply plugin: "com.vanniktech.maven.publish"
+
+allprojects {
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
 }
