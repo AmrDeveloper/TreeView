@@ -1,0 +1,73 @@
+site_name: TreeView
+site_url: https://amrdeveloper.github.io/treeview
+site_description: Multi Roots TreeView implementation for Android Platform with a lot of options and customization
+site_author: AmrDeveloper
+
+copyright: Copyright &copy; 2022 Amr Heshan
+
+repo_name: AmrDeveloper/TreeView
+repo_url: https://github.com/amrdeveloper/treeview
+edit_uri: blob/master/docs/
+
+theme:
+  logo: assets/tv-logo.png
+  favicon: assets/tv-logo.png
+  name: material
+  language: en
+  icon:
+    repo: fontawesome/brands/github
+  font:
+    text: Roboto
+  palette:
+    - scheme: default
+      primary: teal
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  features:
+    - header.autohide
+    - navigation.instant
+    - navigation.tracking
+    - navigation.indexes
+    - content.code.annotate
+    - navigation.sections
+
+nav:
+  - Home: index.md
+  - Install: install.md
+  - Add to XML: add-to-xml.md
+  - View Holders: view-holders.md
+  - Tree Node : treenode.md
+  - TreeView Adapter: treeview-adapter.md
+  - TreeNode Manager: treenode-manager.md
+  - Full Example: full-example.md
+  - Contribution:
+      - Documentation: contribution/documentation.md
+      - Suggest Fetaure: contribution/suggestion.md
+      - Report Issue: contribution/report.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/amrdeveloper
+      name: AmrDeveloper on Github
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/AmrDeveloper
+      name: AmrDeveloper on Twitter
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/amrdeveloper
+      name: AmrDeveloper on Linkedin
+    - icon: fontawesome/brands/medium
+      link: https://amrdeveloper.medium.com
+      name: AmrDeveloper on Medium
+
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js
+  - config.js
