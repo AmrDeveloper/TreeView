@@ -4,6 +4,11 @@
   <img src="media/tv-logo.png" width="128px" height="128px"/>
 </p>
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d899da7160c24435bfe52b29146601ce)](https://www.codacy.com/gh/AmrDeveloper/TreeView/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AmrDeveloper/TreeView&amp;utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/amrdeveloper/treeview/badge)](https://www.codefactor.io/repository/github/amrdeveloper/treeview)
+[![Min API Level](https://img.shields.io/badge/API-%2B16-brightgreen)]()
+![Maven Central](https://img.shields.io/maven-central/v/io.github.amrdeveloper/treeview?color=green)
+
 Multi Roots TreeView implementation for Android Platform with a lot of options and customization
 
 ## Demo
