@@ -12,12 +12,13 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.amrdeveloper.treeviewlib.filestree.FileTreeFragment;
+import com.amrdeveloper.treeviewlib.jsontree.JsonTreeFragment;
 import com.amrdeveloper.treeviewlib.logtree.LogTreeFragment;
 import com.amrdeveloper.treeviewlib.roomstree.RoomTreeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static int NUMBER_OF_FRAGMENTS = 3;
+    private final static int NUMBER_OF_FRAGMENTS = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0: return new FileTreeFragment();
                 case 1: return new LogTreeFragment();
-                default: return new RoomTreeFragment();
+                case 2: return new RoomTreeFragment();
+                default: return new JsonTreeFragment();
             }
         }
 
