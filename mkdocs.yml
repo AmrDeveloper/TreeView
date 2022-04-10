@@ -45,6 +45,7 @@ nav:
   - Tree Node : treenode.md
   - TreeView Adapter: treeview-adapter.md
   - TreeNode Manager: treenode-manager.md
+  - TreeView from json: treeview-json.md
   - Full Example: full-example.md
   - Contribution:
       - Documentation: contribution/documentation.md
