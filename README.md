@@ -44,6 +44,10 @@ Multi Roots TreeView implementation for Android Platform with a lot of options a
   - [TreeNode Manager Documentation](docs/treenode-manager.md)
   - [Full Example Documentation](docs/full-example.md)
 
+### Articles
+  - [A new Android TreeView implementation](https://itnext.io/a-new-android-treeview-implementation-9b27ca9854af)
+  - [How to build TreeView from JSON in Android](https://itnext.io/how-to-build-treeview-from-json-in-android-9ec342a6205)
+
 ### License
 ```
 MIT License
