@@ -20,6 +20,12 @@ Update the list of tree nodes
 public void updateTreeNodes(List<TreeNode> treeNodes)
 ```
 
+Delete all tree nodes
+
+```java
+public void clearTreeNodes()
+```
+
 Collapsing node and all of his children
 
 ```java
