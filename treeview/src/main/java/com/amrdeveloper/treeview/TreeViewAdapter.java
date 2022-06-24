@@ -245,6 +245,15 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     }
 
     /**
+     * Delete all tree nodes
+     */
+    public void clearTreeNodes() {
+        int size = treeNodeManager.size();
+        treeNodeManager.clearNodes();
+        notifyItemRangeRemoved(0, size);
+    }
+
+    /**
      * Register a callback to be invoked when this TreeNode is clicked
      * @param listener The callback that will run
      */
