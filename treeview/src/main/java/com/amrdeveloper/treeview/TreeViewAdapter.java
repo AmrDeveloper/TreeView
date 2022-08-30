@@ -241,7 +241,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
      */
     public void updateTreeNodes(List<TreeNode> treeNodes) {
         treeNodeManager.updateNodes(treeNodes);
-        notifyItemRangeInserted(0, treeNodes.size());
+        notifyDataSetChanged();
     }
 
     /**
