@@ -86,8 +86,24 @@ Register a callback to be invoked when this TreeNode is clicked
 public void setTreeNodeClickListener(OnTreeNodeClickListener listener)
 ```
 
+or using Lambda
+
+```java
+treeViewAdapter.setTreeNodeClickListener((treeNode, nodeView) -> {
+    
+});
+```
+
 Register a callback to be invoked when this TreeNode is clicked and held
 
 ```java
 public void setTreeNodeLongClickListener(OnTreeNodeLongClickListener listener)
+```
+
+or using Lambda
+
+```java
+treeViewAdapter.setTreeNodeLongClickListener((treeNode, nodeView) -> {
+    return true;
+});
 ```
