@@ -1,6 +1,7 @@
 package com.amrdeveloper.treeviewlib.filestree;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import java.util.List;
 public class FileTreeFragment extends Fragment {
 
     private TreeViewAdapter treeViewAdapter;
+
+    private static final String TAG = "FileTreeFragment";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +94,15 @@ public class FileTreeFragment extends Fragment {
         fileRoots.add(gitFolder);
 
         treeViewAdapter.updateTreeNodes(fileRoots);
+
+        treeViewAdapter.setTreeNodeClickListener((treeNode, nodeView) -> {
+            Log.d(TAG, "Click on TreeNode with value " + treeNode.getValue().toString());
+        });
+
+        treeViewAdapter.setTreeNodeLongClickListener((treeNode, nodeView) -> {
+            Log.d(TAG, "LongClick on TreeNode with value " + treeNode.getValue().toString());
+            return true;
+        });
 
         return view;
     }
