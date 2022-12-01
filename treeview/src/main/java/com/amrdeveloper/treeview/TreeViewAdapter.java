@@ -270,6 +270,23 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     }
 
     /**
+     * Set the current visible tree nodes and notify adapter data
+     * @param treeNodes New tree nodes
+     */
+    public void setTreeNodes(List<TreeNode> treeNodes) {
+        treeNodeManager.setTreeNodes(treeNodes);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Get the Current visible Tree nodes
+     * @return The visible Tree nodes main
+     */
+    public List<TreeNode> getTreeNodes() {
+        return treeNodeManager.getTreeNodes();
+    }
+
+    /**
      * @return The current selected TreeNode
      */
     public TreeNode getSelectedNode() {

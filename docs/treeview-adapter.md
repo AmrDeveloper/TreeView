@@ -74,6 +74,18 @@ Expanding all nodes in the tree with their children
 public void expandAll()
 ```
 
+Set the current visible tree nodes and notify all data changed
+
+```java
+public void setTreeNodes(List<TreeNode> treeNodes)
+```
+
+Get the Current visible Tree nodes
+
+```java
+public List<TreeNode> getTreeNodes()
+```
+
 Get the current selected tree node, null of no tree node selected
 
 ```java
