@@ -46,6 +46,23 @@ public class TreeNodeManager {
     }
 
     /**
+     * Set the current visible tree nodes
+     * @param treeNodes New tree nodes
+     */
+    public void setTreeNodes(List<TreeNode> treeNodes) {
+        rootsNodes.clear();
+        rootsNodes.addAll(treeNodes);
+    }
+
+    /**
+     * Get the Current visible Tree nodes
+     * @return The visible Tree nodes main
+     */
+    public List<TreeNode> getTreeNodes() {
+        return rootsNodes;
+    }
+
+    /**
      * Get TreeNode from the current nodes by index
      * @param index of node to get it
      * @return TreeNode from by index from current tree nodes if exists
