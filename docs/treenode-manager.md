@@ -12,6 +12,18 @@ TreeViewAdapter adapter = new TreeViewAdapter(factory, customTreeNodeManager);
 
 The TreeNodeManager class has many method to help easily provide features.
 
+Set the current visible tree nodes
+
+```java
+public void setTreeNodes(List<TreeNode> treeNodes)
+```
+
+Get the Current visible Tree nodes
+
+```java
+public List<TreeNode> getTreeNodes()
+```
+
 Get TreeNode by index
 
 ```java
