@@ -108,6 +108,7 @@ public class TreeNode {
         if (node.getChildren().isEmpty()) return;
         for (TreeNode child : node.getChildren()) {
             child.setLevel(node.getLevel() + 1);
+            updateNodeChildrenDepth(child);
         }
     }
 }
