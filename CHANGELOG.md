@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.1.2 *(2023-02-22)*
+-----------------------------
+
+* Fix Child nodes incorrect level/depth Issue #7 by @AmrDeveloper
+
 Version 1.1.1 *(2022-12-02)*
 -----------------------------
 
