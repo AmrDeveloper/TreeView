@@ -20,7 +20,7 @@ theme:
     text: Roboto
   palette:
     - scheme: default
-      primary: teal
+      primary: light green
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
@@ -34,8 +34,9 @@ theme:
     - navigation.instant
     - navigation.tracking
     - navigation.indexes
-    - content.code.annotate
     - navigation.sections
+    - content.code.annotate
+    - content.code.copy
 
 nav:
   - Home: index.md
@@ -67,8 +68,16 @@ extra:
       link: https://amrdeveloper.medium.com
       name: AmrDeveloper on Medium
 
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+      anchor_linenums: true
+  - pymdownx.superfences
+
 extra_css:
   - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css
+
 extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js
   - config.js

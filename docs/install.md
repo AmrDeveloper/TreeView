@@ -2,6 +2,6 @@
 
 You can install TreeView easily from Maven Central
 
-```gradle
+```groovy
 implementation 'io.github.amrdeveloper:treeview:1.1.3'
 ```
