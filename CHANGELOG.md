@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.1.4 *(2023-05-28)*
+-----------------------------
+
+* Notify only the elements after current position #12 by @AmrDeveloper
+
+
 Version 1.1.3 *(2023-02-25)*
 -----------------------------
 
