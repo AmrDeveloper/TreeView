@@ -135,13 +135,15 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
                 if (isNodeExpanded) collapseNode(currentNode);
                 else expandNode(currentNode);
                 currentNode.setExpanded(!isNodeExpanded);
+
+                // Only children after this position will be inserted (Expanding) or deleted (Collapsing)
+                notifyItemRangeChanged(position, getItemCount() - position);
             }
 
-            notifyDataSetChanged();
-
             // Handle TreeNode click listener event
-            if (treeNodeClickListener != null)
+            if (treeNodeClickListener != null) {
                 treeNodeClickListener.onTreeNodeClick(currentNode, v);
+            }
         });
 
         // Handle TreeNode long click listener event
