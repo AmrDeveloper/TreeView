@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.2.0 *(2024-05-21)*
+-----------------------------
+
+* Update Compile and Target SDk to 34.
+* Fix and optimize node selection.
+
 Version 1.1.4 *(2023-05-28)*
 -----------------------------
 
