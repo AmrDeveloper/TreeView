@@ -1,5 +1,6 @@
 package com.amrdeveloper.treeviewlib.filestree;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +42,14 @@ public class FileViewHolder extends TreeViewHolder {
             String extension = fileNameStr.substring(dotIndex);
             int extensionIcon = ExtensionTable.getExtensionIcon(extension);
             fileTypeIcon.setImageResource(extensionIcon);
+        }
+
+        if (node.isSelected()) {
+            itemView.setBackgroundColor(Color.DKGRAY);
+            fileName.setTextColor(Color.WHITE);
+        } else {
+            itemView.setBackgroundColor(Color.WHITE);
+            fileName.setTextColor(Color.DKGRAY);
         }
 
         if (node.getChildren().isEmpty()) {
