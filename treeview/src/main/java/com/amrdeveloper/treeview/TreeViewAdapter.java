@@ -44,8 +44,9 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     public interface OnTreeNodeClickListener {
         /**
          * Called when a TreeNode has been clicked.
+         *
          * @param treeNode The current clicked node
-         * @param view The view that was clicked and held.
+         * @param view     The view that was clicked and held.
          */
         void onTreeNodeClick(TreeNode treeNode, View view);
     }
@@ -56,8 +57,9 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     public interface OnTreeNodeLongClickListener {
         /**
          * Called when a TreeNode has been clicked and held.
+         *
          * @param treeNode The current clicked node
-         * @param view The view that was clicked and held.
+         * @param view     The view that was clicked and held.
          * @return true if the callback consumed the long click, false otherwise.
          */
         boolean onTreeNodeLongClick(TreeNode treeNode, View view);
@@ -80,6 +82,11 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     private TreeNode currentSelectedNode;
 
     /**
+     * The current selected Tree Node position to be used in notify changes
+     */
+    private int currentSelectedNodePosition = -1;
+
+    /**
      * Custom OnClickListener to be invoked when a TreeNode has been clicked.
      */
     private OnTreeNodeClickListener treeNodeClickListener;
@@ -91,6 +98,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Simple constructor
+     *
      * @param factory a View Holder Factory mapped with layout id's
      */
     public TreeViewAdapter(TreeViewHolderFactory factory) {
@@ -100,6 +108,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Constructor used to accept user custom TreeNodeManager class
+     *
      * @param factory a View Holder Factory mapped with layout id's
      * @param manager a custom tree node manager class
      */
@@ -117,24 +126,43 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TreeViewHolder holder, int position) {
-        TreeNode currentNode = treeNodeManager.get(position);
-        holder.bindTreeNode(currentNode);
+        TreeNode newSelectedNode = treeNodeManager.get(position);
+        holder.bindTreeNode(newSelectedNode);
 
         holder.itemView.setOnClickListener(v -> {
             // Handle node selection
-            if (currentNode == currentSelectedNode) {
-                currentSelectedNode.setSelected(!currentSelectedNode.isSelected());
+            if (newSelectedNode == currentSelectedNode) {
+                boolean isNodeSelected = !currentSelectedNode.isSelected();
+                currentSelectedNode.setSelected(isNodeSelected);
+                notifyItemChanged(currentSelectedNodePosition);
+
+                // Un track this node as selected one
+                if (!isNodeSelected) {
+                    currentSelectedNode = null;
+                    currentSelectedNodePosition = -1;
+                }
             } else {
-                if (currentSelectedNode != null) currentSelectedNode.setSelected(false);
-                currentSelectedNode = currentNode;
+                // Un selected the previous selected tree node
+                if (currentSelectedNode != null) {
+                    currentSelectedNode.setSelected(false);
+                    notifyItemChanged(currentSelectedNodePosition);
+                }
+
+                // Mark the current node as selected
+                newSelectedNode.setSelected(true);
+                notifyItemChanged(position);
+
+                // Update tracking current node value and position
+                currentSelectedNode = newSelectedNode;
+                currentSelectedNodePosition = position;
             }
 
             // Handle node expand and collapse event
-            if (!currentNode.getChildren().isEmpty()) {
-                boolean isNodeExpanded = currentNode.isExpanded();
-                if (isNodeExpanded) collapseNode(currentNode);
-                else expandNode(currentNode);
-                currentNode.setExpanded(!isNodeExpanded);
+            if (!newSelectedNode.getChildren().isEmpty()) {
+                boolean isNodeExpanded = newSelectedNode.isExpanded();
+                if (isNodeExpanded) collapseNode(newSelectedNode);
+                else expandNode(newSelectedNode);
+                newSelectedNode.setExpanded(!isNodeExpanded);
 
                 // Only children after this position will be inserted (Expanding) or deleted (Collapsing)
                 notifyItemRangeChanged(position, getItemCount() - position);
@@ -142,14 +170,14 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
             // Handle TreeNode click listener event
             if (treeNodeClickListener != null) {
-                treeNodeClickListener.onTreeNodeClick(currentNode, v);
+                treeNodeClickListener.onTreeNodeClick(newSelectedNode, v);
             }
         });
 
         // Handle TreeNode long click listener event
         holder.itemView.setOnLongClickListener(v -> {
             if (treeNodeLongClickListener != null) {
-                return treeNodeLongClickListener.onTreeNodeLongClick(currentNode, v);
+                return treeNodeLongClickListener.onTreeNodeLongClick(newSelectedNode, v);
             }
             return true;
         });
@@ -167,6 +195,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Collapsing node and all of his children
+     *
      * @param node The node to collapse it
      */
     public void collapseNode(TreeNode node) {
@@ -178,6 +207,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Expanding node and all of his children
+     *
      * @param node The node to expand it
      */
     public void expandNode(TreeNode node) {
@@ -189,6 +219,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Collapsing full node branches
+     *
      * @param node The node to collapse it
      */
     public void collapseNodeBranch(TreeNode node) {
@@ -198,6 +229,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Expanding node full branches
+     *
      * @param node The node to expand it
      */
     public void expandNodeBranch(TreeNode node) {
@@ -207,7 +239,8 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Expanding one node branch to until specific level
-     * @param node to expand branch of it until level
+     *
+     * @param node  to expand branch of it until level
      * @param level to expand node branches to it
      */
     public void expandNodeToLevel(TreeNode node, int level) {
@@ -217,6 +250,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Expanding all tree nodes branches to until specific level
+     *
      * @param level to expand all nodes branches to it
      */
     public void expandNodesAtLevel(int level) {
@@ -242,6 +276,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Update the list of tree nodes
+     *
      * @param treeNodes The new tree nodes
      */
     public void updateTreeNodes(List<TreeNode> treeNodes) {
@@ -260,6 +295,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Register a callback to be invoked when this TreeNode is clicked
+     *
      * @param listener The callback that will run
      */
     public void setTreeNodeClickListener(OnTreeNodeClickListener listener) {
@@ -268,6 +304,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Register a callback to be invoked when this TreeNode is clicked and held
+     *
      * @param listener The callback that will run
      */
     public void setTreeNodeLongClickListener(OnTreeNodeLongClickListener listener) {
@@ -276,6 +313,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Set the current visible tree nodes and notify adapter data
+     *
      * @param treeNodes New tree nodes
      */
     public void setTreeNodes(List<TreeNode> treeNodes) {
@@ -285,6 +323,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
 
     /**
      * Get the Current visible Tree nodes
+     *
      * @return The visible Tree nodes main
      */
     public List<TreeNode> getTreeNodes() {
@@ -292,7 +331,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<TreeViewHolder> {
     }
 
     /**
-     * @return The current selected TreeNode
+     * @return The current selected TreeNode, or null if no node selected
      */
     public TreeNode getSelectedNode() {
         return currentSelectedNode;
