@@ -68,3 +68,9 @@ roots.add(root1);
 
 treeViewAdapter.updateTreeNodes(roots);
 ```
+
+Don't forget to setup the RecyclerView layout manager
+
+```java
+recyclerView.setLayoutManager(LinearLayoutManager(this));
+```
