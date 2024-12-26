@@ -17,10 +17,10 @@ Multi Roots TreeView implementation for Android Platform with a lot of options a
 
 ## Demo
 <p align="center">
-  <img src="media/treeview_files_demo.gif" alt="animated" height="200" width="23%"/>
-  <img src="media/treeview_todos_demo.gif" alt="animated" height="200" width="23%"/>
-  <img src="media/treeview_logs_demo.gif" alt="animated" height="200" width="23%"/>
-  <img src="media/treeview_chat_demo.gif" alt="animated" height="200" width="23%"/>
+  <img src="media/treeview_files_demo.gif" alt="animated" height="250" width="20%"/>
+  <img src="media/treeview_todos_demo.gif" alt="animated" height="250" width="20%"/>
+  <img src="media/treeview_logs_demo.gif" alt="animated" height="250" width="20%"/>
+  <img src="media/treeview_chat_demo.gif" alt="animated" height="250" width="20%"/>
 </p>
 
 ### Features:
