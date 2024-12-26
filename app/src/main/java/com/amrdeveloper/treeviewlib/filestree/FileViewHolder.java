@@ -13,19 +13,16 @@ import com.amrdeveloper.treeviewlib.R;
 
 public class FileViewHolder extends TreeViewHolder {
 
-    private TextView fileName;
-    private ImageView fileStateIcon;
-    private ImageView fileTypeIcon;
+    private final TextView fileName;
+    private final ImageView fileStateIcon;
+    private final ImageView fileTypeIcon;
 
     public FileViewHolder(@NonNull View itemView) {
         super(itemView);
-        initViews();
-    }
 
-    private void initViews() {
-        fileName = itemView.findViewById(R.id.file_name);
-        fileStateIcon = itemView.findViewById(R.id.file_state_icon);
-        fileTypeIcon = itemView.findViewById(R.id.file_type_icon);
+        this.fileName = itemView.findViewById(R.id.file_name);
+        this.fileStateIcon = itemView.findViewById(R.id.file_state_icon);
+        this.fileTypeIcon = itemView.findViewById(R.id.file_type_icon);
     }
 
     @Override

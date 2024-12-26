@@ -12,17 +12,14 @@ import com.amrdeveloper.treeviewlib.R;
 
 public class RoomViewHolder extends TreeViewHolder {
 
-    private TextView roomName;
-    private ImageView roomStateIcon;
+    private final TextView roomName;
+    private final ImageView roomStateIcon;
 
     public RoomViewHolder(@NonNull View itemView) {
         super(itemView);
-        initViews();
-    }
 
-    private void initViews() {
-        roomName = itemView.findViewById(R.id.room_name);
-        roomStateIcon = itemView.findViewById(R.id.room_state_icon);
+        this.roomName = itemView.findViewById(R.id.room_name);
+        this.roomStateIcon = itemView.findViewById(R.id.room_state_icon);
     }
 
     @Override

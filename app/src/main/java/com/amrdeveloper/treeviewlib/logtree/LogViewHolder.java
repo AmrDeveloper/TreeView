@@ -12,19 +12,16 @@ import com.amrdeveloper.treeviewlib.R;
 
 public class LogViewHolder extends TreeViewHolder {
 
-    private TextView logName;
-    private ImageView logStateIcon;
-    private ImageView logTypeIcon;
+    private final TextView logName;
+    private final ImageView logStateIcon;
+    private final ImageView logTypeIcon;
 
     public LogViewHolder(@NonNull View itemView) {
         super(itemView);
-        initViews();
-    }
 
-    private void initViews() {
-        logName = itemView.findViewById(R.id.log_name);
-        logStateIcon = itemView.findViewById(R.id.log_state_icon);
-        logTypeIcon = itemView.findViewById(R.id.log_type_icon);
+        this.logName = itemView.findViewById(R.id.log_name);
+        this.logStateIcon = itemView.findViewById(R.id.log_state_icon);
+        this.logTypeIcon = itemView.findViewById(R.id.log_type_icon);
     }
 
     @Override

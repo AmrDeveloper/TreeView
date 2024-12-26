@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/dimen5dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/todo_state_icon"
+        android:layout_width="@dimen/dimen24dp"
+        android:layout_height="@dimen/dimen24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow_right" />
+
+    <CheckBox
+        android:id="@+id/todo_check_box"
+        android:layout_width="@dimen/dimen24dp"
+        android:layout_height="@dimen/dimen24dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/dimen5dp"
+        android:src="@drawable/ic_arrow_right" />
+
+    <TextView
+        android:id="@+id/todo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/todo_state_icon"
+        android:layout_toRightOf="@id/todo_state_icon"
+        android:padding="@dimen/dimen5dp"
+        android:textSize="@dimen/dimen20sp"
+        tools:text="Directory" />
+</RelativeLayout>

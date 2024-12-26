@@ -15,10 +15,11 @@ import com.amrdeveloper.treeviewlib.filestree.FileTreeFragment;
 import com.amrdeveloper.treeviewlib.jsontree.JsonTreeFragment;
 import com.amrdeveloper.treeviewlib.logtree.LogTreeFragment;
 import com.amrdeveloper.treeviewlib.roomstree.RoomTreeFragment;
+import com.amrdeveloper.treeviewlib.todotree.TodoTreeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static int NUMBER_OF_FRAGMENTS = 4;
+    private final static int NUMBER_OF_FRAGMENTS = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +46,13 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            switch (position) {
-                case 0: return new FileTreeFragment();
-                case 1: return new LogTreeFragment();
-                case 2: return new RoomTreeFragment();
-                default: return new JsonTreeFragment();
-            }
+            return switch (position) {
+                case 0 -> new FileTreeFragment();
+                case 1 -> new LogTreeFragment();
+                case 2 -> new TodoTreeFragment();
+                case 3 -> new RoomTreeFragment();
+                default -> new JsonTreeFragment();
+            };
         }
 
         @Override
