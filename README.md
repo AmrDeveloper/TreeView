@@ -4,18 +4,23 @@
   <img src="media/tv-logo.png" width="128px" height="128px"/>
 </p>
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d899da7160c24435bfe52b29146601ce)](https://www.codacy.com/gh/AmrDeveloper/TreeView/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AmrDeveloper/TreeView&amp;utm_campaign=Badge_Grade)
-[![CodeFactor](https://www.codefactor.io/repository/github/amrdeveloper/treeview/badge)](https://www.codefactor.io/repository/github/amrdeveloper/treeview)
-[![Min API Level](https://img.shields.io/badge/API-%2B16-brightgreen)]()
-![Maven Central](https://img.shields.io/maven-central/v/io.github.amrdeveloper/treeview?color=green)
+<p align="center">
+ <img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/d899da7160c24435bfe52b29146601ce">
+ <img alt="CodeFactor" src="https://www.codefactor.io/repository/github/amrdeveloper/treeview/badge">
+ <img alt="Min API Level" src="https://img.shields.io/badge/API-%2B16-brightgreen">
+ <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.amrdeveloper/treeview?color=green">
+</p>
 
+<p align="center">
 Multi Roots TreeView implementation for Android Platform with a lot of options and customization
+</p>
 
 ## Demo
 <p align="center">
-  <img src="media/treeview_files_demo.gif" alt="animated" width="23%"/>
-  <img src="media/treeview_todo_demo.gif" alt="animated" width="23%"/>
-  <img src="media/treeview_chat_demo.gif" alt="animated" width="23%"/>
+  <img src="media/treeview_files_demo.gif" alt="animated" height="200" width="23%"/>
+  <img src="media/treeview_todos_demo.gif" alt="animated" height="200" width="23%"/>
+  <img src="media/treeview_logs_demo.gif" alt="animated" height="200" width="23%"/>
+  <img src="media/treeview_chat_demo.gif" alt="animated" height="200" width="23%"/>
 </p>
 
 ### Features:
@@ -52,7 +57,7 @@ Multi Roots TreeView implementation for Android Platform with a lot of options a
 ```
 MIT License
 
-Copyright (c) 2022 Amr Hesham
+Copyright (c) 2022 - 2024 Amr Hesham
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
